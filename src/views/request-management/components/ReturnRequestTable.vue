@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-table :data="requests">
-      <el-table-column label="Device" min-width="200">
+      <el-table-column label="Device Name" min-width="200" align="left">
         <template slot-scope="{row}">
-          {{ row.deviceId }}
+          {{ row.deviceName }}
         </template>
       </el-table-column>
       <el-table-column label="Status" width="200" align="left">
@@ -15,7 +15,12 @@
       </el-table-column>
       <el-table-column label="Action" width="100" align="center">
         <template slot-scope="{row}">
-          <el-button type="danger" size="mini" @click="cancelRequest(row.id)" :disabled="!canDelete(row.status)">
+          <el-button
+            type="danger"
+            size="mini"
+            @click="cancelRequest(row.id)"
+            :disabled="!canDelete(row.status)"
+          >
             Cancel
           </el-button>
         </template>

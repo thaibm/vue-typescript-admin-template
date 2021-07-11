@@ -8,9 +8,19 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="Device Name" min-width="180" align="left">
+        <template slot-scope="{row}">
+          {{ row.deviceName }}
+        </template>
+      </el-table-column>
       <el-table-column label="Description" min-width="200" align="left">
         <template slot-scope="{row}">
           {{ row.description }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Reason" min-width="200" align="left">
+        <template slot-scope="{row}">
+          {{ row.reason }}
         </template>
       </el-table-column>
       <el-table-column label="Status" width="200" align="left">

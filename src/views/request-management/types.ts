@@ -20,7 +20,9 @@ export enum ERequestStatus {
 export interface IDeviceRequest {
   id: string
   type: ERequestType
+  deviceName: string
   description?: string
+  reason?: string
   priority?: ERequestPriority
   status?: ERequestStatus
   deviceId?: string
