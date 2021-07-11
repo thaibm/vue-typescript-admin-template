@@ -31,3 +31,10 @@ export default class extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.dashboard-container {
+  flex: 1;
+  background-color: rgb(240, 242, 245);
+  display: flex;
+}
+</style>

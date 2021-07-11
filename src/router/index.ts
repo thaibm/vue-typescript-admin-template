@@ -100,7 +100,7 @@ export const constantRoutes: RouteConfig[] = [
         }
       }
     ]
-  },
+  }
   // {
   //   path: '/documentation',
   //   component: Layout,
@@ -113,24 +113,24 @@ export const constantRoutes: RouteConfig[] = [
   //     }
   //   ]
   // },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () =>
-          import(/* webpackChunkName: "guide" */ '@/views/guide/index.vue'),
-        name: 'Guide',
-        meta: {
-          title: 'guide',
-          icon: 'guide',
-          noCache: true
-        }
-      }
-    ]
-  }
+  // {
+  //   path: '/guide',
+  //   component: Layout,
+  //   redirect: '/guide/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () =>
+  //         import(/* webpackChunkName: "guide" */ '@/views/guide/index.vue'),
+  //       name: 'Guide',
+  //       meta: {
+  //         title: 'guide',
+  //         icon: 'guide',
+  //         noCache: true
+  //       }
+  //     }
+  //   ]
+  // }
   // {
   //   path: '/profile',
   //   component: Layout,
@@ -454,6 +454,50 @@ export const constantRoutes: RouteConfig[] = [
 //   }
 // ]
 export const asyncRoutes: RouteConfig[] = [
+  {
+    path: '/request',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () =>
+          import(
+            /* webpackChunkName: "export-excel" */ '@/views/request-management/index.vue'
+          ),
+        name: 'Request List',
+        meta: {
+          title: 'requestManagement',
+          icon: 'guide'
+        }
+      },
+      {
+        path: ':id',
+        component: () =>
+          import(
+            /* webpackChunkName: "export-excel" */ '@/views/request-management/index.vue'
+          ),
+        meta: {
+          hidden: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/icon',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import(/* webpackChunkName: "icons" */ '@/views/icons/index.vue'),
+        name: 'Icons',
+        meta: {
+          title: 'icons',
+          icon: 'icon',
+          noCache: true
+        }
+      }
+    ]
+  },
   {
     path: '*',
     redirect: '/404',

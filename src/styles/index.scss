@@ -48,6 +48,7 @@ label {
 
 .app-container {
   padding: 20px;
+  flex: 1;
 }
 
 .components-container {
@@ -153,4 +154,9 @@ aside {
 
 .no-padding {
   padding: 0px !important;
+}
+
+.page-title {
+  margin-bottom: 30px;
+  color:#383838;
 }
