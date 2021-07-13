@@ -1,3 +1,4 @@
+import { IRequestState } from './modules/request'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { IAppState } from './modules/app'
@@ -16,6 +17,7 @@ export interface IRootState {
   errorLog: IErrorLogState
   permission: IPermissionState
   settings: ISettingsState
+  request: IRequestState
 }
 
 // Declare empty store first, dynamically register all modules later.

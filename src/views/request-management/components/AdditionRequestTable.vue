@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import { ERequestPriority, ERequestStatus, IDeviceRequest } from '../types'
 import { requestStatusFilter, requestPriorityFilter } from '../filters'
 
@@ -108,11 +108,9 @@ export default class AdditionRequestTable extends Vue {
     return status === ERequestStatus.PENDING
   }
 
+  @Emit('onEditRequest')
   editRequest(id: string) {
-    console.log(
-      '🚀 ~ file: AdditionRequestTable.vue ~ line 48 ~ AdditionRequestTable ~ editRequest ~ id',
-      id
-    )
+    return id
   }
 }
 </script>
