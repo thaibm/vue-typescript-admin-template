@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="visible" label-width="160px">
+  <el-dialog :title="dialogTitle" :visible.sync="visible" label-width="175px">
     <el-form ref="form" :model="form" :rules="rules">
-      <el-form-item label="Request Type" prop="type" label-width="160px">
+      <el-form-item label="Request Type" prop="type" label-width="175px">
         <el-select
           v-model="form.type"
           placeholder="Please select a request type"
@@ -16,7 +16,7 @@
       </el-form-item>
 
       <template v-if="isAddtionalRequest">
-        <el-form-item label="Device Name" prop="deviceName" label-width="160px">
+        <el-form-item label="Device Name" prop="deviceName" label-width="175px">
           <el-input
             placeholder="Enter device name"
             v-model="form.deviceName"
@@ -26,7 +26,7 @@
         <el-form-item
           label="Device Description"
           prop="description"
-          label-width="160px"
+          label-width="175px"
         >
           <el-input
             type="textarea"
@@ -35,7 +35,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="Reason" prop="reason" label-width="160px">
+        <el-form-item label="Reason" prop="reason" label-width="175px">
           <el-input
             type="textarea"
             placeholder="Enter Reason"
@@ -46,7 +46,7 @@
         <el-form-item
           label="Request Priority"
           prop="priority"
-          label-width="160px"
+          label-width="175px"
         >
           <el-select
             v-model="form.priority"

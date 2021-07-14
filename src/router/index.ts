@@ -488,7 +488,8 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'index',
-        component: () => import(/* webpackChunkName: "icons" */ '@/views/icons/index.vue'),
+        component: () =>
+          import(/* webpackChunkName: "icons" */ '@/views/icons/index.vue'),
         name: 'Icons',
         meta: {
           title: 'icons',
@@ -507,7 +508,7 @@ export const asyncRoutes: RouteConfig[] = [
 
 const createRouter = () =>
   new VueRouter({
-    // mode: 'history',  // Disabled due to Github Pages doesn't support this, enable this if you need.
+    mode: 'history', // Disabled due to Github Pages doesn't support this, enable this if you need.
     scrollBehavior: (to, from, savedPosition) => {
       if (savedPosition) {
         return savedPosition
@@ -523,8 +524,8 @@ const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter();
-  (router as any).matcher = (newRouter as any).matcher // reset router
+  const newRouter = createRouter()
+  ;(router as any).matcher = (newRouter as any).matcher // reset router
 }
 
 export default router

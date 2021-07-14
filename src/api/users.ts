@@ -7,9 +7,9 @@ export const getUsers = (params: any) =>
     params
   })
 
-export const getUserInfo = (data: any) =>
+export const getUserInfo = (data?: any) =>
   request({
-    url: '/users/info',
+    url: '/api/services/app/Session/GetCurrentLoginInformations',
     method: 'post',
     data
   })
@@ -35,7 +35,7 @@ export const deleteUser = (username: string) =>
 
 export const login = (data: any) =>
   request({
-    url: '/users/login',
+    url: '/api/TokenAuth/Authenticate',
     method: 'post',
     data
   })
