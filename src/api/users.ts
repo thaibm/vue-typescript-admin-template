@@ -10,7 +10,7 @@ export const getUsers = (params: any) =>
 export const getUserInfo = (data?: any) =>
   request({
     url: '/api/services/app/Session/GetCurrentLoginInformations',
-    method: 'post',
+    method: 'get',
     data
   })
 
