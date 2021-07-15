@@ -7,6 +7,7 @@
       >
     </div>
     <DeviceTable :devices="devices" />
+    <CreateEditDeviceModal />
   </div>
 </template>
 
@@ -14,21 +15,21 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { DEVICE_LIST } from './mock'
 import DeviceTable from './components/DeviceTable.vue'
+import CreateEditDeviceModal from './components/CreateEditDeviceModal.vue'
+import { DeviceModule } from '@/store/modules/device'
 
 @Component({
-  name: 'Empty',
+  name: 'DeviceList',
   components: {
-    DeviceTable
+    DeviceTable,
+    CreateEditDeviceModal
   }
 })
 export default class extends Vue {
   private devices = DEVICE_LIST
 
   private toggleDialogVisible(visible: boolean) {
-    console.log(
-      '🚀 ~ file: index.vue ~ line 28 ~ extends ~ toggleDialogVisible ~ visible',
-      visible
-    )
+    DeviceModule.setDialogVisible(visible)
   }
 }
 </script>

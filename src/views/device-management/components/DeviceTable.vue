@@ -1,38 +1,38 @@
 <template>
   <div class="table-outer">
     <el-table :data="devices">
-      <el-table-column label="Device Name" width="200" align="left">
+      <el-table-column label="Device Name" align="left">
         <template slot-scope="{row}">
           {{ row.name }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Description" min-width="200" align="left">
+      <el-table-column label="Description" align="left">
         <template slot-scope="{row}">
           {{ row.description }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Manufacturer" min-width="200" align="left">
+      <el-table-column label="Manufacturer" align="left">
         <template slot-scope="{row}">
           {{ row.manufacturer }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Guarantee Date" min-width="200" align="left">
+      <el-table-column label="Guarantee Date" align="left">
         <template slot-scope="{row}">
           {{ row.guaranteeDate | parseTime }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Status" width="200" align="left">
+      <el-table-column label="Status" align="left">
         <template slot-scope="{row}">
           <el-tag :type="getStatusType(row.status)" size="mini">
             {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" width="200" align="left">
+      <el-table-column label="Actions" align="left">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="editDevice(row.id)">
             Edit
