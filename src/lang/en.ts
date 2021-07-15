@@ -63,7 +63,8 @@ export default {
     i18n: 'I18n',
     externalLink: 'External Link',
     profile: 'Profile',
-    requestManagement: 'Request Management'
+    requestManagement: 'Request Management',
+    deviceManagement: 'Device Management'
   },
   navbar: {
     logOut: 'Log Out',

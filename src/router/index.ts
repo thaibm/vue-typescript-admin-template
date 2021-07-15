@@ -460,22 +460,31 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'list',
-        component: () =>
-          import(
-            /* webpackChunkName: "export-excel" */ '@/views/request-management/index.vue'
-          ),
+        component: () => import('@/views/request-management/index.vue'),
         name: 'Request List',
         meta: {
           title: 'requestManagement',
           icon: 'guide'
         }
+      }
+    ]
+  },
+  {
+    path: '/device',
+    component: Layout,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/device-management/index.vue'),
+        name: 'Device List',
+        meta: {
+          title: 'deviceManagement',
+          icon: 'component'
+        }
       },
       {
         path: ':id',
-        component: () =>
-          import(
-            /* webpackChunkName: "export-excel" */ '@/views/request-management/index.vue'
-          ),
+        component: () => import('@/views/device-management/views/DeviceDetails.vue'),
         meta: {
           hidden: true
         }
@@ -508,7 +517,7 @@ export const asyncRoutes: RouteConfig[] = [
 
 const createRouter = () =>
   new VueRouter({
-    mode: 'history', // Disabled due to Github Pages doesn't support this, enable this if you need.
+    // mode: 'history', // Disabled due to Github Pages doesn't support this, enable this if you need.
     scrollBehavior: (to, from, savedPosition) => {
       if (savedPosition) {
         return savedPosition
