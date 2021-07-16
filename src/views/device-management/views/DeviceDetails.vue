@@ -6,7 +6,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
-  name: 'Empty'
+  name: 'DeviceDetails'
 })
 export default class extends Vue {}
 </script>

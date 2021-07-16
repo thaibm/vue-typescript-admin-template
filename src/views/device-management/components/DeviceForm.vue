@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" label-width="170px">
+  <el-form ref="form" :model="form">
     <el-form-item label="Device name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>

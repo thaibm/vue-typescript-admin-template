@@ -1,6 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="visible" label-width="175px">
-    <DeviceForm v-model="form" @onSubmit="onSubmit" @onCancel="toggleDialogVisible" />
+  <el-dialog :title="dialogTitle" :visible.sync="visible" :width="dialogWidth">
+    <DeviceForm
+      v-model="form"
+      @onSubmit="onSubmit"
+      @onCancel="toggleDialogVisible"
+    />
 
     <span slot="footer" class="dialog-footer">
       <el-button @click="toggleDialogVisible(false)">Cancel</el-button>
@@ -38,6 +42,16 @@ export default class extends Vue {
 
   set visible(visible: boolean) {
     DeviceModule.setDialogVisible(visible)
+  }
+
+  get dialogWidth() {
+    if (window.innerWidth < 576) {
+      return '100%'
+    }
+    if (window.innerWidth < 780) {
+      return '80%'
+    }
+    return '50%'
   }
 
   dialogTitle = DeviceModule.currentDevice ? 'Edit Device' : 'Import New Device'

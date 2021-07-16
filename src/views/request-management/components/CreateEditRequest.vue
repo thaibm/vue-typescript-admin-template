@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :title="dialogTitle" :visible.sync="visible" label-width="175px">
+  <el-dialog :title="dialogTitle" :visible.sync="visible" :width="dialogWidth">
     <el-form ref="form" :model="form" :rules="rules">
-      <el-form-item label="Request Type" prop="type" label-width="175px">
+      <el-form-item label="Request Type" prop="type">
         <el-select
           v-model="form.type"
           placeholder="Please select a request type"
@@ -16,18 +16,14 @@
       </el-form-item>
 
       <template v-if="isAddtionalRequest">
-        <el-form-item label="Device Name" prop="deviceName" label-width="175px">
+        <el-form-item label="Device Name" prop="deviceName">
           <el-input
             placeholder="Enter device name"
             v-model="form.deviceName"
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Device Description"
-          prop="description"
-          label-width="175px"
-        >
+        <el-form-item label="Device Description" prop="description">
           <el-input
             type="textarea"
             placeholder="Enter Device Description"
@@ -35,7 +31,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="Reason" prop="reason" label-width="175px">
+        <el-form-item label="Reason" prop="reason">
           <el-input
             type="textarea"
             placeholder="Enter Reason"
@@ -43,11 +39,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Request Priority"
-          prop="priority"
-          label-width="175px"
-        >
+        <el-form-item label="Request Priority" prop="priority">
           <el-select
             v-model="form.priority"
             placeholder="Please select a request priority"
@@ -122,6 +114,16 @@ export default class CreateEditRequest extends Vue {
 
   get isAddtionalRequest() {
     return this.form.type === ERequestType.ADDITION
+  }
+
+  get dialogWidth() {
+    if (window.innerWidth < 576) {
+      return '100%'
+    }
+    if (window.innerWidth < 780) {
+      return '80%'
+    }
+    return '50%'
   }
 
   toggleDialogVisible(visible: boolean) {
