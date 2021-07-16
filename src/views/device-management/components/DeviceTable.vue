@@ -1,50 +1,76 @@
 <template>
   <div class="table-outer">
     <el-table :data="devices">
-      <el-table-column label="Device Name" align="left">
+      <el-table-column min-width="110px"
+        label="Device Name"
+        align="left"
+      >
         <template slot-scope="{row}">
           {{ row.name }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Description" align="left">
+      <el-table-column min-width="110px"
+        label="Description"
+        align="left"
+      >
         <template slot-scope="{row}">
           {{ row.description }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Manufacturer" align="left">
+      <el-table-column min-width="120px"
+        label="Manufacturer"
+        align="left"
+      >
         <template slot-scope="{row}">
           {{ row.manufacturer }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Guarantee Date" align="left">
+      <el-table-column min-width="125px"
+        label="Guarantee Date"
+        align="left"
+      >
         <template slot-scope="{row}">
           {{ row.guaranteeDate | parseTime }}
         </template>
       </el-table-column>
 
-      <el-table-column label="Status" align="left">
+      <el-table-column
+        label="Status"
+        align="left"
+      >
         <template slot-scope="{row}">
-          <el-tag :type="getStatusType(row.status)" size="mini">
+          <el-tag
+            :type="getStatusType(row.status)"
+            size="mini"
+          >
             {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="left">
+      <el-table-column
+        label="Actions"
+        align="left"
+        min-width="100px"
+      >
         <template slot-scope="{row}">
-          <el-button type="primary" size="mini" @click="editDevice(row.id)">
-            Edit
+          <el-button circle
+            type="primary"
+            size="mini"
+            @click="editDevice(row.id)"
+          >
+            <i class="el-icon-edit"></i>
           </el-button>
-          <el-button
+          <el-button circle
             v-if="canDelete(row.status)"
             type="danger"
             size="mini"
             @click="canDelete(row.id)"
             :disabled="!canDelete(row.status)"
           >
-            Delete
+            <i class="el-icon-delete"></i>
           </el-button>
         </template>
       </el-table-column>
@@ -52,7 +78,8 @@
     <el-pagination
       background
       layout="prev, pager, next"
-      :total="1000"
+      :total="100"
+      page-size="25"
       class="mt-10"
     >
     </el-pagination>
@@ -107,6 +134,7 @@ export default class extends Vue {
 .table-outer {
   background: #fff;
   padding: 15px;
+  overflow: auto;
 }
 .mt-10 {
   margin-top: 10px;

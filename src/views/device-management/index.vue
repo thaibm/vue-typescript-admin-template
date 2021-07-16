@@ -2,9 +2,14 @@
   <div class="app-container">
     <div class="header">
       <h1 class="page-title">Device Management</h1>
-      <el-button type="primary" size="small" @click="toggleDialogVisible(true)"
-        >Import Device</el-button
+      <el-button
+        type="primary"
+        size="small"
+        @click="toggleDialogVisible(true)"
       >
+        <i class="el-icon-circle-plus-outline" />
+        <span class="hidden-sm-and-down">Device</span>
+      </el-button>
     </div>
     <DeviceTable :devices="devices" />
     <CreateEditDeviceModal />
@@ -43,6 +48,7 @@ export default class extends Vue {
   .header {
     display: flex;
     align-items: center;
+    margin-bottom: 30px;
 
     .page-title {
       flex: 1;

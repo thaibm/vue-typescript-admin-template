@@ -1,5 +1,10 @@
 <template>
-  <div class="dashboard-editor-container"></div>
+  <div class="dashboard-container">
+    <el-button
+      type="primary"
+      @click="goToDecoder"
+    >Decode Device</el-button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,12 +15,18 @@ import { Component, Vue } from 'vue-property-decorator'
   name: 'DashboardAdmin',
   components: {}
 })
-export default class extends Vue {}
+export default class extends Vue {
+  goToDecoder() {
+    this.$router.push('/device/decode')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.dashboard-editor-container {
+.dashboard-container {
   flex: 1;
   background-color: rgb(240, 242, 245);
+  justify-content: center;
+  align-items: center;
 }
 </style>

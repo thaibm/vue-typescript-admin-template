@@ -483,8 +483,17 @@ export const asyncRoutes: RouteConfig[] = [
         }
       },
       {
-        path: ':id',
+        path: 'details/:id',
         component: () => import('@/views/device-management/views/DeviceDetails.vue'),
+        name: 'Device Details',
+        meta: {
+          hidden: true
+        }
+      },
+      {
+        path: 'decode',
+        name: 'Device QR Decoder',
+        component: () => import('@/views/device-management/views/QRCodeReader.vue'),
         meta: {
           hidden: true
         }
@@ -517,7 +526,7 @@ export const asyncRoutes: RouteConfig[] = [
 
 const createRouter = () =>
   new VueRouter({
-    // mode: 'history', // Disabled due to Github Pages doesn't support this, enable this if you need.
+    mode: 'history', // Disabled due to Github Pages doesn't support this, enable this if you need.
     scrollBehavior: (to, from, savedPosition) => {
       if (savedPosition) {
         return savedPosition
@@ -534,7 +543,7 @@ const router = createRouter()
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
-  ;(router as any).matcher = (newRouter as any).matcher // reset router
+    ; (router as any).matcher = (newRouter as any).matcher // reset router
 }
 
 export default router
