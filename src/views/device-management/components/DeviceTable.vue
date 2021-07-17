@@ -7,19 +7,34 @@
         </template>
       </el-table-column>
 
-      <el-table-column min-width="110px" label="Description" align="left">
+      <el-table-column
+        min-width="110px"
+        label="Description"
+        align="left"
+        v-if="!isMobile"
+      >
         <template slot-scope="{row}">
           {{ row.description }}
         </template>
       </el-table-column>
 
-      <el-table-column min-width="120px" label="Manufacturer" align="left">
+      <el-table-column
+        min-width="120px"
+        label="Manufacturer"
+        align="left"
+        v-if="!isMobile"
+      >
         <template slot-scope="{row}">
           {{ row.manufacturer }}
         </template>
       </el-table-column>
 
-      <el-table-column min-width="125px" label="Guarantee Date" align="left">
+      <el-table-column
+        min-width="135px"
+        label="Guarantee Date"
+        align="left"
+        v-if="!isMobile"
+      >
         <template slot-scope="{row}">
           {{ new Date(row.guaranteeDate) | moment('MMMM Do YYYY') }}
         </template>
@@ -32,7 +47,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="left" min-width="100px">
+      <el-table-column label="Actions" align="left" min-width="140px">
         <template slot-scope="{row}">
           <el-button
             circle
@@ -87,6 +102,7 @@ import {
   getDevicesApi
 } from '@/api/device'
 import { DeviceModule } from '@/store/modules/device'
+import { AppModule, DeviceType } from '@/store/modules/app'
 import CreateEditDeviceModal from './CreateEditDeviceModal.vue'
 
 @Component({
@@ -118,6 +134,10 @@ export default class extends Vue {
 
   get dialogVisible() {
     return DeviceModule.dialogVisible
+  }
+
+  get isMobile() {
+    return AppModule.device === DeviceType.Mobile
   }
 
   @Watch('dialogVisible')
