@@ -2,23 +2,18 @@
   <div class="app-container">
     <div class="header">
       <h1 class="page-title">Device Management</h1>
-      <el-button
-        type="primary"
-        size="small"
-        @click="toggleDialogVisible(true)"
-      >
+      <el-button type="primary" size="small" @click="toggleDialogVisible(true)">
         <i class="el-icon-circle-plus-outline" />
         <span class="hidden-sm-and-down">Device</span>
       </el-button>
     </div>
-    <DeviceTable :devices="devices" />
+    <DeviceTable />
     <CreateEditDeviceModal />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { DEVICE_LIST } from './mock'
 import DeviceTable from './components/DeviceTable.vue'
 import CreateEditDeviceModal from './components/CreateEditDeviceModal.vue'
 import { DeviceModule } from '@/store/modules/device'
@@ -31,8 +26,6 @@ import { DeviceModule } from '@/store/modules/device'
   }
 })
 export default class extends Vue {
-  private devices = DEVICE_LIST
-
   private toggleDialogVisible(visible: boolean) {
     DeviceModule.setDialogVisible(visible)
   }

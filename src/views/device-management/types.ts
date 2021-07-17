@@ -1,18 +1,18 @@
 export enum EDeviceStatus {
-  AVAILABLE = 'AVAILABLE',
-  USING = 'USING',
-  BROKEN = 'BROKEN'
+  AVAILABLE,
+  USING,
+  BROKEN
 }
 
 export interface IDevice {
   id: string
   name: string
-  description: string
+  description?: string
   manufacturer: string
-  guaranteeDate: Date
+  guaranteeDate?: Date
   status: EDeviceStatus
-  borrowedUserId: string
-  borrowedDate: Date
+  borrowedUserId?: string
+  borrowedDate?: Date
 }
 
 export const DEVICE_STATUS_OPTIONS = [
@@ -32,8 +32,20 @@ export const DEVICE_STATUS_OPTIONS = [
 
 export interface IDeviceForm {
   name: string
-  description: string
+  description?: string
   manufacturer: string
-  guaranteeDate: Date
+  guaranteeDate?: Date
   status: EDeviceStatus
+}
+
+export interface IDevicesParams {
+  sort?: string
+  sortDirection?: number
+  filterItems?: {
+    propertyName: string
+    value: any
+  }[]
+  searchText?: string
+  skipCount: number
+  maxResultCount: number
 }

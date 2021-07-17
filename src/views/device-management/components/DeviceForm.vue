@@ -1,16 +1,16 @@
 <template>
-  <el-form ref="form" :model="form">
-    <el-form-item label="Device name">
+  <el-form ref="form" :model="form" :rules="rules">
+    <el-form-item label="Device name" prop="name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="Device description">
+    <el-form-item label="Device description" prop="description">
       <el-input v-model="form.description"></el-input>
     </el-form-item>
-    <el-form-item label="Manufacturer">
+    <el-form-item label="Manufacturer" prop="manufacturer">
       <el-input v-model="form.manufacturer"></el-input>
     </el-form-item>
 
-    <el-form-item label="Status">
+    <el-form-item label="Status" prop="status">
       <el-select v-model="form.status" placeholder="Please select status">
         <el-option
           v-for="option in deviceStatusOptions"
@@ -21,7 +21,7 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item label="Guarantee Date">
+    <el-form-item label="Guarantee Date" prop="guaranteeDate">
       <el-date-picker
         type="date"
         placeholder="Pick a date"
@@ -42,6 +42,44 @@ import { DEVICE_STATUS_OPTIONS, IDeviceForm } from '../types'
 export default class extends Vue {
   @VModel() private form!: IDeviceForm
   deviceStatusOptions = DEVICE_STATUS_OPTIONS
+
+  rules = {
+    name: [
+      {
+        required: true,
+        message: 'Device Name is required.',
+        trigger: 'blur'
+      }
+    ],
+    description: [
+      {
+        required: true,
+        message: 'Device description is required.',
+        trigger: 'blur'
+      }
+    ],
+    manufacturer: [
+      {
+        required: true,
+        message: 'Device manufacturer is required.',
+        trigger: 'blur'
+      }
+    ],
+    status: [
+      {
+        required: true,
+        message: 'Device status is required.',
+        trigger: 'blur'
+      }
+    ],
+    guaranteeDate: [
+      {
+        required: true,
+        message: 'Guarantee Date is required.',
+        trigger: 'blur'
+      }
+    ]
+  }
 }
 </script>
 

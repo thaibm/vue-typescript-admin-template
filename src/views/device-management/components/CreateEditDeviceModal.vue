@@ -1,10 +1,6 @@
 <template>
   <el-dialog :title="dialogTitle" :visible.sync="visible" :width="dialogWidth">
-    <DeviceForm
-      v-model="form"
-      @onSubmit="onSubmit"
-      @onCancel="toggleDialogVisible"
-    />
+    <DeviceForm v-model="form" />
 
     <span slot="footer" class="dialog-footer">
       <el-button @click="toggleDialogVisible(false)">Cancel</el-button>
@@ -20,6 +16,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import DeviceForm from './DeviceForm.vue'
 import { DeviceModule } from '@/store/modules/device'
 import { EDeviceStatus, IDeviceForm } from '../types'
+import { Message } from 'element-ui'
+import { createDeviceApi } from '@/api/device'
 
 const DEFAULT_FORM: IDeviceForm = {
   name: '',
@@ -57,15 +55,27 @@ export default class extends Vue {
   dialogTitle = DeviceModule.currentDevice ? 'Edit Device' : 'Import New Device'
   form = { ...DEFAULT_FORM }
 
+  mounted() {
+    if (DeviceModule.currentDevice) {
+      this.form = {
+        name: DeviceModule.currentDevice.name,
+        manufacturer: DeviceModule.currentDevice.manufacturer,
+        status: DeviceModule.currentDevice.status,
+        description: DeviceModule.currentDevice.description
+      }
+    }
+  }
+
   toggleDialogVisible(visible: boolean) {
     DeviceModule.setDialogVisible(visible)
   }
 
-  onSubmit() {
-    console.log(
-      '🚀 ~ file: CreateEditDeviceModal.vue ~ line 36 ~ extends ~ onSubmit ~ form',
-      this.form
-    )
+  async onSubmit() {
+    try {
+      await createDeviceApi(this.form)
+    } catch (error) {
+      Message.error(error)
+    }
   }
 }
 </script>
