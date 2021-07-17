@@ -5,7 +5,7 @@ export enum EDeviceStatus {
 }
 
 export interface IDevice {
-  id: string
+  id?: string
   name: string
   description?: string
   manufacturer: string
@@ -13,6 +13,7 @@ export interface IDevice {
   status: EDeviceStatus
   borrowedUserId?: string
   borrowedDate?: Date
+  qrCodeBase64?: string
 }
 
 export const DEVICE_STATUS_OPTIONS = [
@@ -30,14 +31,6 @@ export const DEVICE_STATUS_OPTIONS = [
   }
 ]
 
-export interface IDeviceForm {
-  name: string
-  description?: string
-  manufacturer: string
-  guaranteeDate?: Date
-  status: EDeviceStatus
-}
-
 export interface IDevicesParams {
   sort?: string
   sortDirection?: number
@@ -48,4 +41,12 @@ export interface IDevicesParams {
   searchText?: string
   skipCount: number
   maxResultCount: number
+}
+
+export const DEFAULT_FORM: IDevice = {
+  name: '',
+  description: '',
+  manufacturer: '',
+  guaranteeDate: new Date(),
+  status: EDeviceStatus.AVAILABLE
 }

@@ -21,7 +21,7 @@
 
       <el-table-column min-width="125px" label="Guarantee Date" align="left">
         <template slot-scope="{row}">
-          {{ row.guaranteeDate | parseTime }}
+          {{ new Date(row.guaranteeDate) | moment('MMMM Do YYYY') }}
         </template>
       </el-table-column>
 
@@ -34,6 +34,14 @@
       </el-table-column>
       <el-table-column label="Actions" align="left" min-width="100px">
         <template slot-scope="{row}">
+          <el-button
+            circle
+            type="primary"
+            size="mini"
+            @click="viewDevice(row.id)"
+          >
+            <svg-icon name="eye-on" />
+          </el-button>
           <el-button
             circle
             type="primary"
@@ -66,11 +74,12 @@
       @current-change="changeCurrentPage"
     >
     </el-pagination>
+    <CreateEditDeviceModal @onSubmit="fetchDevices" :device="currentDevice" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { IDevice, EDeviceStatus, IDevicesParams } from '../types'
 import {
   deleteDeviceByIdApi,
@@ -78,9 +87,13 @@ import {
   getDevicesApi
 } from '@/api/device'
 import { DeviceModule } from '@/store/modules/device'
+import CreateEditDeviceModal from './CreateEditDeviceModal.vue'
 
 @Component({
   name: 'Empty',
+  components: {
+    CreateEditDeviceModal
+  },
   filters: {
     deviceStatus: (status: EDeviceStatus) => {
       switch (status) {
@@ -101,12 +114,25 @@ export default class extends Vue {
   readonly pageSize = 10
   private currentPage = 1
   private totalItems = 0
+  private currentDevice: IDevice | null = null
+
+  get dialogVisible() {
+    return DeviceModule.dialogVisible
+  }
+
+  @Watch('dialogVisible')
+  onCloseDialog(val: boolean) {
+    if (!val) {
+      this.currentDevice = null
+    }
+  }
 
   mounted() {
     this.fetchDevices()
   }
 
-  async fetchDevices() {
+  async fetchDevices(fetch = true) {
+    if (!fetch) return
     const params: IDevicesParams = {
       skipCount: this.currentPage - 1,
       maxResultCount: this.pageSize
@@ -149,15 +175,15 @@ export default class extends Vue {
     }
   }
 
+  viewDevice(id: string) {
+    this.$router.push(`/device/details/${id}`)
+  }
+
   async editDevice(id: string) {
     try {
       const { data } = await getDeviceByIdApi(id)
-      console.log(
-        '🚀 ~ file: DeviceTable.vue ~ line 148 ~ extends ~ editDevice ~ data',
-        data
-      )
-      const { result }: { result: IDevice } = data
-      DeviceModule.setCurrentDevice(result)
+      this.currentDevice = data.result
+      DeviceModule.setDialogVisible(true)
     } catch (error) {
       console.error(error)
     }
@@ -166,6 +192,7 @@ export default class extends Vue {
   async deleteDevice(id: string) {
     try {
       await deleteDeviceByIdApi(id)
+      this.fetchDevices()
     } catch (error) {
       console.error(error)
     }

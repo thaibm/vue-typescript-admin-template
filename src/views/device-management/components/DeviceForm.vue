@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" :rules="rules">
+  <el-form ref="form" :model="form" :rules="rules" :disabled="isPreview">
     <el-form-item label="Device name" prop="name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
@@ -33,14 +33,15 @@
 </template>
 
 <script lang="ts">
-import { Component, VModel, Vue } from 'vue-property-decorator'
-import { DEVICE_STATUS_OPTIONS, IDeviceForm } from '../types'
+import { Component, Prop, VModel, Vue } from 'vue-property-decorator'
+import { DEVICE_STATUS_OPTIONS, IDevice } from '../types'
 
 @Component({
   name: 'DeviceForm'
 })
 export default class extends Vue {
-  @VModel() private form!: IDeviceForm
+  @Prop() private isPreview!: boolean
+  @VModel() private form!: IDevice
   deviceStatusOptions = DEVICE_STATUS_OPTIONS
 
   rules = {

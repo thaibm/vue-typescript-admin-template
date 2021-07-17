@@ -8,21 +8,18 @@
       </el-button>
     </div>
     <DeviceTable />
-    <CreateEditDeviceModal />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import DeviceTable from './components/DeviceTable.vue'
-import CreateEditDeviceModal from './components/CreateEditDeviceModal.vue'
 import { DeviceModule } from '@/store/modules/device'
 
 @Component({
   name: 'DeviceList',
   components: {
-    DeviceTable,
-    CreateEditDeviceModal
+    DeviceTable
   }
 })
 export default class extends Vue {

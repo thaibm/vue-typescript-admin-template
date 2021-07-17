@@ -5,7 +5,7 @@
 <script lang="js">
 import { Component, Vue } from 'vue-property-decorator'
 import { QrcodeStream } from 'vue-qrcode-reader'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 
 @Component({
   name: 'QRCodeReader',
@@ -13,8 +13,7 @@ import { Message } from 'element-ui'
 })
 export default class extends Vue {
   onDecode(decodedString) {
-    console.log('extends ~ onDecode ~ decodedString', decodedString)
-    Message.success(decodedString)
+    this.$router.push(`/device/details/${decodedString}`)
   }
 }
 </script>

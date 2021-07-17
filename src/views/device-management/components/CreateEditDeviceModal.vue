@@ -12,20 +12,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 import DeviceForm from './DeviceForm.vue'
 import { DeviceModule } from '@/store/modules/device'
-import { EDeviceStatus, IDeviceForm } from '../types'
+import { DEFAULT_FORM, IDevice } from '../types'
 import { Message } from 'element-ui'
 import { createDeviceApi } from '@/api/device'
-
-const DEFAULT_FORM: IDeviceForm = {
-  name: '',
-  description: '',
-  manufacturer: '',
-  guaranteeDate: new Date(),
-  status: EDeviceStatus.AVAILABLE
-}
 
 @Component({
   name: 'CreateEditDeviceModal',
@@ -34,6 +26,7 @@ const DEFAULT_FORM: IDeviceForm = {
   }
 })
 export default class extends Vue {
+  @Prop() private device!: IDevice
   get visible() {
     return DeviceModule.dialogVisible
   }
@@ -52,17 +45,25 @@ export default class extends Vue {
     return '50%'
   }
 
-  dialogTitle = DeviceModule.currentDevice ? 'Edit Device' : 'Import New Device'
+  dialogTitle = this.device ? 'Edit Device' : 'Import New Device'
   form = { ...DEFAULT_FORM }
 
   mounted() {
-    if (DeviceModule.currentDevice) {
-      this.form = {
-        name: DeviceModule.currentDevice.name,
-        manufacturer: DeviceModule.currentDevice.manufacturer,
-        status: DeviceModule.currentDevice.status,
-        description: DeviceModule.currentDevice.description
-      }
+    if (this.device && this.device.id !== this.form.id) {
+      this.form = { ...this.device }
+    }
+  }
+
+  beforeUpdate() {
+    if (this.device && this.device.id !== this.form.id) {
+      this.form = { ...this.device }
+    }
+  }
+
+  @Watch('visible')
+  onCloseDialog(val: boolean) {
+    if (!val) {
+      this.form = { ...DEFAULT_FORM }
     }
   }
 
@@ -70,11 +71,15 @@ export default class extends Vue {
     DeviceModule.setDialogVisible(visible)
   }
 
+  @Emit('onSubmit')
   async onSubmit() {
+    this.toggleDialogVisible(false)
     try {
       await createDeviceApi(this.form)
+      return true
     } catch (error) {
       Message.error(error)
+      return false
     }
   }
 }

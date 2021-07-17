@@ -1,7 +1,7 @@
 import request from '@/utils/request'
-import { IDeviceForm, IDevicesParams } from '@/views/device-management/types'
+import { IDevice, IDevicesParams } from '@/views/device-management/types'
 
-export const createDeviceApi = (data: IDeviceForm) =>
+export const createDeviceApi = (data: IDevice) =>
   request({
     url: '/api/services/app/devices',
     method: 'post',
