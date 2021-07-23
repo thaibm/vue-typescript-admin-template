@@ -14,3 +14,15 @@ export const getRequestsApi = (data: IRequestsParams) =>
     method: 'post',
     data
   })
+
+export const getRequestByIdApi = (id: string) =>
+  request({
+    url: `/api/services/app/requests/${id}`,
+    method: 'get'
+  })
+
+export const deleteRequestByIdApi = (id: string) =>
+  request({
+    url: `/api/services/app/requests/${id}`,
+    method: 'delete'
+  })

@@ -44,10 +44,10 @@
             v-if="canEdit(row.status)"
             type="danger"
             size="mini"
-            @click="editRequest(row.id)"
+            @click="deleteRequest(row.id)"
             :disabled="!canEdit(row.status)"
           >
-            Cancel
+            Delete
           </el-button>
         </template>
       </el-table-column>
@@ -110,6 +110,11 @@ export default class AdditionRequestTable extends Vue {
 
   @Emit('onEditRequest')
   editRequest(id: string) {
+    return id
+  }
+
+  @Emit('onDeleteRequest')
+  deleteRequest(id: string) {
     return id
   }
 }

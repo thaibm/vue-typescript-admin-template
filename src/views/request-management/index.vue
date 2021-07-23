@@ -11,19 +11,22 @@
         <AdditionRequestTable
           :requests="addtionRequests"
           @onEditRequest="onEditRequest"
+          @onDeleteRequest="onDeleteRequest"
         ></AdditionRequestTable>
       </el-tab-pane>
       <el-tab-pane label="Return">
-        <ReturnRequestTable :requests="returnRequests"></ReturnRequestTable>
+        <ReturnRequestTable
+          :requests="returnRequests"
+          @onEditRequest="onEditRequest"></ReturnRequestTable>
       </el-tab-pane>
     </el-tabs>
 
-    <create-edit-request :request="request"></create-edit-request>
+    <create-edit-request :request="request" @onSubmit="onSubmit"></create-edit-request>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { ERequestType, IDeviceRequest, IRequestsParams } from './types'
 import { DEVICE_REQUESTS } from './mock'
 import AdditionRequestTable from './components/AdditionRequestTable.vue'
@@ -31,7 +34,9 @@ import ReturnRequestTable from './components/ReturnRequestTable.vue'
 import CreateEditRequest from './components/CreateEditRequest.vue'
 import { RequestModule } from '@/store/modules/request'
 import {
-  getRequestsApi
+  getRequestsApi,
+  getRequestByIdApi,
+  deleteRequestByIdApi
 } from '@/api/request'
 
 @Component({
@@ -43,6 +48,7 @@ import {
   }
 })
 export default class RequestManagement extends Vue {
+  private requests: IDeviceRequest | null = null
   addtionRequests: IDeviceRequest[] = []
   returnRequests: IDeviceRequest[] = []
   request: IDeviceRequest | null = null
@@ -52,6 +58,11 @@ export default class RequestManagement extends Vue {
 
   mounted() {
     this.fetchAddtionRequests()
+    this.fetchReturnRequests()
+  }
+
+  get requestDialogVisible() {
+    return RequestModule.createEditDialogVisible
   }
 
   async fetchAddtionRequests(fetch = true) {
@@ -100,14 +111,41 @@ export default class RequestManagement extends Vue {
 
   toggleDialogVisible(visible: boolean) {
     RequestModule.toggleCreateEditDialogVisible(visible)
+    if (!visible) {
+      this.request = null
+    }
   }
 
-  onEditRequest(id: string) {
-    // TODO fetch the lastest request by id
-    console.log(
-      '🚀 ~ file: index.vue ~ line 61 ~ RequestManagement ~ onEditRequest ~ id',
-      id
-    )
+  async onEditRequest(id: string) {
+    try {
+      const { data } = await getRequestByIdApi(id)
+      this.request = data.result
+      RequestModule.toggleCreateEditDialogVisible(true)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async onDeleteRequest(id: string) {
+    try {
+      await deleteRequestByIdApi(id)
+      this.fetchAddtionRequests()
+      this.fetchReturnRequests()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  @Watch('requestDialogVisible')
+  onCloseDialog(val: boolean) {
+    if (!val) {
+      this.request = null
+    }
+  }
+
+  onSubmit() {
+    this.fetchAddtionRequests()
+    this.fetchReturnRequests()
   }
 }
 </script>

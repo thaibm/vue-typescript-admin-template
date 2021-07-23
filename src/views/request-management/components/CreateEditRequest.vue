@@ -70,9 +70,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit, Watch } from 'vue-property-decorator'
 import {
   ERequestPriority,
+  ERequestStatus,
   ERequestType,
   IDeviceRequest,
   REQUEST_PRIORITY_OPTIONS,
@@ -82,13 +83,14 @@ import { RequestModule } from '@/store/modules/request'
 import { createRequestApi } from '@/api/request'
 import { Message } from 'element-ui'
 
-const DEFAULT_REQUEST_FORM = {
+const DEFAULT_REQUEST_FORM: IDeviceRequest = {
   id: '',
   type: ERequestType.ADDITION,
   deviceName: '',
   description: '',
   reason: '',
   priority: ERequestPriority.MEDIUM,
+  status: ERequestStatus.PENDING,
   deviceId: ''
 }
 
@@ -131,6 +133,18 @@ export default class CreateEditRequest extends Vue {
     return '50%'
   }
 
+  mounted() {
+    if (this.request && this.request.id !== this.form.id) {
+      this.form = { ...this.request }
+    }
+  }
+
+  beforeUpdate() {
+    if (this.request && this.request.id !== this.form.id) {
+      this.form = { ...this.request }
+    }
+  }
+
   toggleDialogVisible(visible: boolean) {
     RequestModule.toggleCreateEditDialogVisible(visible)
   }
@@ -171,6 +185,13 @@ export default class CreateEditRequest extends Vue {
         trigger: 'blur'
       }
     ]
+  }
+
+  @Watch('visible')
+  onCloseDialog(val: boolean) {
+    if (!val) {
+      this.form = { ...DEFAULT_REQUEST_FORM }
+    }
   }
 
   @Emit('onSubmit')
