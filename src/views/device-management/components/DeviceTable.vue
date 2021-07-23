@@ -127,7 +127,7 @@ import CreateEditDeviceModal from './CreateEditDeviceModal.vue'
 })
 export default class extends Vue {
   private devices: IDevice[] = []
-  readonly pageSize = 10
+  readonly pageSize = 100
   private currentPage = 1
   private totalItems = 0
   private currentDevice: IDevice | null = null

@@ -1,20 +1,20 @@
 export enum ERequestType {
-  ADDITION = 'ADDITION',
-  RETURN = 'RETURN'
+  ADDITION,
+  RETURN
 }
 
 export enum ERequestPriority {
-  LOW = 'LOW',
-  MEDIUM = 'MEDIUM',
-  CRITICAL = 'CRITICAL'
+  LOW,
+  MEDIUM,
+  CRITICAL
 }
 
 export enum ERequestStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
-  DELIVERED = 'DELIVERED',
-  RETURNED = 'RETURNED'
+  PENDING,
+  APPROVED,
+  REJECTED,
+  DELIVERED,
+  RETURNED
 }
 
 export interface IDeviceRequest {
@@ -53,3 +53,15 @@ export const REQUEST_PRIORITY_OPTIONS = [
     value: ERequestPriority.CRITICAL
   }
 ]
+
+export interface IRequestsParams {
+  sort?: string
+  sortDirection?: number
+  filterItems?: {
+    propertyName: string
+    value: any
+  }[]
+  searchText?: string
+  skipCount: number
+  maxResultCount: number
+}

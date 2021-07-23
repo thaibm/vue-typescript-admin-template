@@ -61,14 +61,16 @@
     <span slot="footer" class="dialog-footer">
       <el-button @click="toggleDialogVisible(false)">Cancel</el-button>
       <el-button type="primary" @click="toggleDialogVisible(false)">
+        <el-button type="primary" @click="onSubmit">
         Confirm
+        </el-button>
       </el-button>
     </span>
   </el-dialog>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import {
   ERequestPriority,
   ERequestType,
@@ -77,8 +79,11 @@ import {
   REQUEST_TYPE_OPTIONS
 } from '../types'
 import { RequestModule } from '@/store/modules/request'
+import { createRequestApi } from '@/api/request'
+import { Message } from 'element-ui'
 
 const DEFAULT_REQUEST_FORM = {
+  id: '',
   type: ERequestType.ADDITION,
   deviceName: '',
   description: '',
@@ -93,7 +98,7 @@ const DEFAULT_REQUEST_FORM = {
 export default class CreateEditRequest extends Vue {
   @Prop({ required: false }) private request!: IDeviceRequest
   private ERequestType = ERequestType
-  private form = Object.assign({}, DEFAULT_REQUEST_FORM)
+  private form = { ...DEFAULT_REQUEST_FORM }
   private requestOptions = [...REQUEST_TYPE_OPTIONS]
   private priorityOptions = [...REQUEST_PRIORITY_OPTIONS]
 
@@ -166,6 +171,18 @@ export default class CreateEditRequest extends Vue {
         trigger: 'blur'
       }
     ]
+  }
+
+  @Emit('onSubmit')
+  async onSubmit() {
+    this.toggleDialogVisible(false)
+    try {
+      await createRequestApi(this.form)
+      return true
+    } catch (error) {
+      Message.error(error)
+      return false
+    }
   }
 }
 </script>
