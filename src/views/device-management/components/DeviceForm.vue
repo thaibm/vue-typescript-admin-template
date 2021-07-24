@@ -6,7 +6,7 @@
     <el-form-item label="Device description" prop="description">
       <el-input v-model="form.description"></el-input>
     </el-form-item>
-    <el-form-item label="Manufacturer" prop="manufacturer">
+    <el-form-item label="Manufacture" prop="manufacturer">
       <el-input v-model="form.manufacturer"></el-input>
     </el-form-item>
 

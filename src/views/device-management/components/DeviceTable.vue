@@ -20,7 +20,7 @@
 
       <el-table-column
         min-width="120px"
-        label="Manufacturer"
+        label="Manufacture"
         align="left"
         v-if="!isMobile"
       >
@@ -127,7 +127,7 @@ import CreateEditDeviceModal from './CreateEditDeviceModal.vue'
 })
 export default class extends Vue {
   private devices: IDevice[] = []
-  readonly pageSize = 100
+  readonly pageSize = 10
   private currentPage = 1
   private totalItems = 0
   private currentDevice: IDevice | null = null
@@ -154,7 +154,7 @@ export default class extends Vue {
   async fetchDevices(fetch = true) {
     if (!fetch) return
     const params: IDevicesParams = {
-      skipCount: this.currentPage - 1,
+      skipCount: (this.currentPage - 1) * 10,
       maxResultCount: this.pageSize
       // searchText: '',
       // filterItems: [],
